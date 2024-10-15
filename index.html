@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+     <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: darkblue;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main{
+            flex-basis: 350px;
+            height: 400px;
+            background-color: white;
+            box-shadow: 0px 0px 10px 10px grey;
+        }
+        .main h2{
+            padding: 10px;
+            font-size: 30px;
+        }
+        .form-outer{
+            margin-bottom: 10px;
+        }
+        .form-outer label{
+            display: block;
+            margin: 0 10px;
+        }
+        .form-outer input{
+            margin: 0 10px;
+            width: 90%;
+            height: 30px;
+            border-radius: 30px;
+            padding: 0 10px;
+        }
+        .form-outer button{
+            padding: 10px;
+            width: 90%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 20px;
+            border-radius: 30px;
+            background-color: skyblue;
+            border: none;
+        }
+     </style>
+</head>
+<body>
+    <div class="main">
+        <h2>Get In Touch</h2>
+        <form method="post" id="form">
+            <div id="res" style="color: green;font-weight: 500;padding: 10px;"></div>
+            <div class="form-outer">
+                <label>Name</label>
+                <input type="text" name="name">
+            </div>
+            <div class="form-outer">
+                <label>Email</label>
+                <input type="email" name="email">
+            </div>
+            <div class="form-outer">
+                <label>Phone</label>
+                <input type="number" name="phone">
+            </div>
+            <div class="form-outer">
+                <button name="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    let url='https://script.google.com/macros/s/AKfycbye8et6uHzto2YH2GC6I6DjvEZtFgTDyA1hCi0ciIE8oHRV4XCXUq3z3hlnQXUAOFG1/exec'
+    let form=document.querySelector('#form');
+    form.addEventListener("submit",(e)=>{
+        e.target.btn.innerHTML="Submitting....";
+        let d=new FormData(form);
+        fetch(url,{
+            method:"POST",
+            body:d
+        }).then((res)=>res.text())
+        .then((finalRes)=>{
+            e.target.btn.innerHTML="Submit";
+            document.getElementById("res").innerHTML=finalRes;
+            console.log(finalRes);
+            form.reset();
+            setTimeout(()=>{
+                document.getElementById("res").innerHTML='';
+            },5000)
+        })
+        e.preventDefault();
+    })
+</script>
+</html>
